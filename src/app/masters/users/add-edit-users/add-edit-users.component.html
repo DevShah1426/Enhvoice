@@ -1,0 +1,103 @@
+<div class="rounded-lg">
+  <div
+    class="w-full flex flex-row items-center bg-[var(--content-dialog-bg)] text-[var(--content-dialog-text)] px-4 py-1"
+  >
+    <div class="text-xl w-full font-medium leading-10">{{ config.data ? "Edit" : "Add New" }} User</div>
+    <div class="w-full text-right">
+      <svg-icon key="close" [size]="'md'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <form class="mt-5" [formGroup]="usersForm">
+      <!-- Property Information -->
+      <div class="text-[var(--secondary-color)] font-semibold text-lg leading-5">Contact Information</div>
+      <div class="text-[var(--tertiary-color)] font-medium text-sm">Enter details of the user</div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'First Name'"
+          [control]="usersForm.get('firstName')"
+        ></app-input>
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Last Name'"
+          [control]="usersForm.get('lastName')"
+        ></app-input>
+      </div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Contact Number'"
+          [inputType]="'number'"
+          [control]="usersForm.get('phone')"
+        ></app-input>
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Email Address'"
+          [control]="usersForm.get('email')"
+        ></app-input>
+      </div>
+
+      <!-- Owner Information -->
+      <div class="text-[var(--secondary-color)] font-semibold text-lg leading-10 mt-7">User Details</div>
+      <div class="text-[var(--tertiary-color)] font-medium text-sm">Enter details of the customer</div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Employee Code'"
+          [control]="usersForm.get('empCode')"
+          [readOnly]="config.data ? true : false"
+        ></app-input>
+        <app-dropdown
+          class="w-1/2 -mt-5"
+          [dropdownLabelClass]="'form-label'"
+          [dropdownLabel]="'View Groups'"
+          [dropdownItems]="userGroups"
+          [optionLabel]="'ugpName'"
+          [dropdownClass]="'form-dropdown'"
+          (onSelect)="onSelect($event)"
+          [control]="usersForm.get('ugpId')"
+          [selectedItem]="selectedUserGroup"
+        ></app-dropdown>
+
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Username'"
+          [control]="usersForm.get('username')"
+          [readOnly]="config.data ? true : false"
+        ></app-input>
+        <app-input
+          class="w-1/2"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputType]="'password'"
+          [inputLabel]="'Password'"
+          [control]="usersForm.get('password')"
+          [readOnly]="config.data ? true : false"
+        ></app-input>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="w-full mt-9 text-center mb-4">
+        <app-button
+          [disabled]="!usersForm.valid"
+          [buttonClass]="'form-button'"
+          [label]="buttonLabel"
+          (onClick)="addUser()"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+<app-header></app-header>
+<div class="w-full p-9" *appHasPermission="'template'">
+  <app-title-card
+    [title]="'Field Selection'"
+    [description]="'Select the field you want to crop'"
+    [buttonLabel]="'Upload PDF'"
+    [showButton]="true"
+    [buttonIcon]="'pi-upload'"
+    (emitButtonClick)="file.click()"
+  ></app-title-card>
+  <div class="grid grid-cols-2 bg-white rounded-2xl gap-10 py-6 px-4 mt-9 items-center w-full h-full">
+    <div class="w-full h-full text-center shadow-xl">
+      <div class="flex flex-row w-full pb-2">
+        <div class="w-full text-left">
+          <svg-icon key="previous" [size]="'md'" class="cursor-pointer" (click)="previousImage()" />
+        </div>
+        <div class="w-full text-sm font-medium">
+          Page {{ images.length == 0 ? 0 : currentImageIndex + 1 }} of {{ images.length }}
+        </div>
+        <div class="w-full text-right">
+          <svg-icon key="next" [size]="'md'" class="cursor-pointer" (click)="nextImage()" />
+        </div>
+      </div>
+
+      <div class="flex flex-row pb-5 w-full items-center justify-center gap-5" *ngIf="images.length > 0">
+        <div class="p-1 w-9 h-9 flex items-center justify-center bg-[var(--sidenav-bg)] rounded-full shadow-md">
+          <svg-icon key="zoom-in" (click)="zoomIn()" [size]="'lg'" class="cursor-pointer text-white" />
+        </div>
+        <div class="p-1 w-9 h-9 flex items-center justify-center bg-[var(--sidenav-bg)] rounded-full shadow-md">
+          <svg-icon (click)="zoomOut()" key="zoom-out" [size]="'lg'" class="cursor-pointer text-white" />
+        </div>
+      </div>
+
+      <canvas
+        #imageCanvas
+        (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)"
+        (mouseup)="onMouseUp($event)"
+        (mouseleave)="onMouseLeave($event)"
+      ></canvas>
+    </div>
+    <div class="min-h-full h-full">
+      <form [formGroup]="templateForm">
+        <div class="w-full grid grid-cols-2 text-left gap-10 mt-5">
+          <!-- Property -->
+          <div class="-mt-2">
+            <app-dropdown
+              [dropdownLabelClass]="'form-label'"
+              [dropdownLabel]="'Select Property'"
+              [dropdownItems]="properties"
+              [optionLabel]="'propertyGroupName'"
+              [dropdownClass]="'form-dropdown'"
+              [control]="templateForm.get('propertyId')"
+              (onSelect)="onPropertySelect($event)"
+              [selectedItem]="selectedProperty"
+            ></app-dropdown>
+          </div>
+
+          <!-- Provider -->
+          <div class="-mt-2">
+            <app-dropdown
+              [dropdownLabelClass]="'form-label'"
+              [dropdownLabel]="'Select Provider'"
+              [dropdownItems]="providers"
+              [optionLabel]="'providerName'"
+              [dropdownClass]="'form-dropdown'"
+              [control]="templateForm.get('providerId')"
+              (onSelect)="onProviderSelect($event)"
+              [selectedItem]="selectedProvider"
+            ></app-dropdown>
+          </div>
+
+          <!-- Utility -->
+          <div class="-mt-2">
+            <app-dropdown
+              [dropdownLabelClass]="'form-label'"
+              [dropdownLabel]="'Select Utility'"
+              [dropdownItems]="utilities"
+              [optionLabel]="'utilityName'"
+              [dropdownClass]="'form-dropdown'"
+              [control]="templateForm.get('utilityId')"
+              (onSelect)="onUtilitySelect($event)"
+              [selectedItem]="selectedUtility"
+            ></app-dropdown>
+          </div>
+
+          <div>
+            <app-input
+              [inputClass]="'form-input'"
+              [labelClass]="'form-label'"
+              [inputLabel]="'Template Name'"
+              [control]="templateForm.get('templateName')"
+            ></app-input>
+          </div>
+          <div class="-mt-2">
+            <app-dropdown
+              [dropdownLabelClass]="'form-label'"
+              [dropdownLabel]="'Select Field'"
+              [dropdownItems]="fields"
+              [optionLabel]="'value'"
+              [dropdownClass]="'form-dropdown'"
+              (onSelect)="onSelect($event)"
+              [control]="templateForm.get('fieldId')"
+              [selectedItem]="selectedField"
+            ></app-dropdown>
+          </div>
+          <div>
+            <app-input
+              [inputClass]="'form-input'"
+              [labelClass]="'form-label'"
+              [inputLabel]="'Field Label'"
+              [control]="templateForm.get('fieldName')"
+            ></app-input>
+          </div>
+        </div>
+        <div class="text-center w-full mt-5">
+          <app-button
+            (onClick)="fillRectangles()"
+            [label]="'Add to Selection'"
+            [icon]="'pi-plus-circle'"
+            [disabled]="!templateForm.valid || !selectedField || !selectedUtility"
+          ></app-button>
+        </div>
+        <div class="text-center w-full mt-5">
+          <app-button
+            (onClick)="saveTemplate()"
+            [label]="'Save Template'"
+            [icon]="'pi-save'"
+            [disabled]="!templateForm.valid || !selectedField || !selectedUtility || rectangles.length < 1"
+          ></app-button>
+        </div>
+      </form>
+      <app-table
+        [actionPermissions]="actionPermissions"
+        [dataColumns]="dataColumns"
+        [dataList]="dataList"
+        [actionsVisible]="true"
+        [svgIcons]="[{ action: 'delete', icon: 'delete' }]"
+        (actionClick)="onActionClick($event)"
+      ></app-table>
+    </div>
+  </div>
+</div>
+<input #file class="hidden" type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf" />

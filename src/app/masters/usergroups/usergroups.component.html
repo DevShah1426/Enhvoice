@@ -1,0 +1,36 @@
+<app-header></app-header>
+<div class="w-full p-9">
+  <div class="grid grid-cols-2 bg-white w-full px-4 gap-10" *appHasPermission="'viewUserGroup'">
+    <div
+      *ngFor="let group of groups; let i = index"
+      class="flex flex-row justify-start rounded-[10px] border border-gray-200"
+    >
+      <div [style.background-color]="group.borderColor" class="w-4 rounded-[30px]"></div>
+      <div class="flex flex-col p-5 w-full relative">
+        <div class="flex flex-col w-3/4">
+          <div class="text-xl font-medium leading-6 text-[var(--header-text)]">
+            Group {{ i + 1 }} : {{ group.ugpName }}
+          </div>
+          <div class="mt-4 font-normal text-lg">
+            <label class="text-[var(--file-name)]"> {{ group.ugpName }} group description </label>
+            <label class="text-[var(--header-description)]"> based on their role and permissions </label>
+          </div>
+          <div class="text-[var(--table-header-text)] font-normal text-lg mt-8">
+            <label class="text-[var(--file-name)]">Creation Date : </label>
+            <label class="text-[var(--header-description)]">{{ group.createDtTm | date }}</label>
+          </div>
+        </div>
+        <div class="mt-3 mb-3 border-b border-b-[#37474F9C] w-full"></div>
+        <div class="text-[var(--table-header-text)] font-medium text-lg flex flex-row items-center justify-start">
+          <div>
+            <svg-icon [key]="'multiple-users'" [size]="'xl'" class="mr-2" />
+          </div>
+          <div>{{ group.userCount }} Members</div>
+        </div>
+        <div class="absolute top-5 right-5" *appHasPermission="'addUserGroup'">
+          <svg-icon (click)="editGroup(group)" [key]="'edit'" [size]="'md'" class="cursor-pointer" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

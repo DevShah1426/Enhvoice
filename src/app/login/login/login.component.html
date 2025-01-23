@@ -1,0 +1,41 @@
+<div class="relative h-full w-full login-bg">
+  <div
+    class="absolute bg-white rounded-[10px] h-[50em] w-[35%] top-7 right-80 py-20 px-14 flex flex-col items-center justify-start"
+  >
+    <div class="w-full text-left">
+      <img src="/assets/logo.png" class="w-20 h-20" />
+    </div>
+    <div class="w-full font-normal text-4xl mt-10 text-[#153060] font-sans">Welcome Back</div>
+    <form [formGroup]="loginForm">
+      <div class="w-full mt-10">
+        <app-input
+          [labelClass]="'font-light'"
+          [inputClass]="'login-input'"
+          [inputLabel]="'User Name'"
+          [control]="loginForm.get('username')"
+        ></app-input>
+      </div>
+      <div class="w-full mt-4">
+        <app-input
+          [labelClass]="'font-light'"
+          [inputClass]="'login-input'"
+          [inputLabel]="'Password'"
+          [inputType]="'password'"
+          [control]="loginForm.get('password')"
+        ></app-input>
+      </div>
+      <div class="w-full mt-4">
+        <app-captcha [control]="loginForm.get('captcha')"></app-captcha>
+      </div>
+      <div class="w-full mt-7">
+        <button
+          type="button"
+          (click)="login()"
+          class="w-full h-[60px] text-base font-semibold tracking-widest uppercase bg-[var(--login-button-bg)] text-[var(--login-button-text)] rounded"
+        >
+          Log in
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

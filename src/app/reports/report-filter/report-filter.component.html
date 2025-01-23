@@ -1,0 +1,54 @@
+<div class="rounded-lg">
+  <div
+    class="w-full flex flex-row items-center bg-[var(--content-dialog-bg)] text-[var(--content-dialog-text)] px-4 py-1"
+  >
+    <div class="text-xl w-full font-medium leading-10">Filters</div>
+    <div class="w-full text-right">
+      <svg-icon key="close" [size]="'md'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <form class="mt-5" [formGroup]="filterForm">
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-dropdown
+          class="w-1/2 -mt-4"
+          [dropdownLabelClass]="'form-label'"
+          [dropdownLabel]="'Select Property'"
+          [dropdownItems]="properties"
+          [optionLabel]="'propertyGroupName'"
+          [dropdownClass]="'form-dropdown'"
+          (onSelect)="onPropertySelect($event)"
+          [control]="filterForm.get('pgId')"
+          [selectedItem]="selectedProperty"
+        ></app-dropdown>
+      </div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-datepicker
+          class="w-1/2"
+          [inputClass]="'form-datepicker'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'From Date'"
+          [control]="filterForm.get('fromDate')"
+          [maxDate]="maxDate"
+        ></app-datepicker>
+        <app-datepicker
+          class="w-1/2"
+          [inputClass]="'form-datepicker'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'To Date'"
+          [control]="filterForm.get('toDate')"
+          [maxDate]="maxDate"
+        ></app-datepicker>
+      </div>
+      <!-- Submit Button -->
+      <div class="w-full mt-9 text-center mb-4">
+        <app-button
+          [disabled]="!filterForm.valid"
+          [buttonClass]="'form-button'"
+          [label]="'Apply Filter'"
+          (onClick)="applyFilter()"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

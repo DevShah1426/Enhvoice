@@ -1,0 +1,11 @@
+<div class="bg-white w-full rounded-2xl py-6 px-8">
+  <div class="flex flex-row items-center justify-start w-full">
+    <div class="w-full">
+      <div class="text-xl font-medium leading-10 text-[var(--header-text)]">{{ title }}</div>
+      <div class="text-base font-semibold leading-8 text-[var(--header-description)]">{{ description }}</div>
+    </div>
+    <div class="w-full text-right" *ngIf="showButton">
+      <app-button [label]="buttonLabel" [icon]="buttonIcon" (onClick)="onClick()"></app-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="flex flex-col">
+  <div class="px-3 flex flex-col text-lg font-semibold leading-10 text-[var(--recent-uploads)]">
+    <div class="flex items-center"><svg-icon [key]="'auditlogs'" [size]="'lg'" class="mr-4" />Recent Uploads</div>
+    <div class="h-64 overflow-auto">
+      <div class="px-5 mt-4" *ngFor="let file of recentUploads.slice(0, displayCount); let i = index">
+        <div class="flex flex-row items-center">
+          <div class="basis-1/12 mr-3">
+            <svg-icon [key]="'file'" [size]="'lg'" [color]="fileColors[i % fileColors.length]" />
+          </div>
+          <div class="flex flex-col basis-11/12">
+            <div class="font-medium text-base text-[var(--file-name)]">
+              {{ file.fileName }}
+            </div>
+            <div class="font-normal text-xs text-[var(--header-description)]">
+              {{ file.fileSize }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="text-center cursor-pointer text-xs font-medium mt-8 text-[var(--show-more)]"
+        (click)="loadMore()"
+        *ngIf="recentUploads.length > displayCount"
+      >
+        show more <svg-icon [key]="'showmore'" [size]="'sm'" class="ml-1" />
+      </div>
+      <div
+        *ngIf="recentUploads.length <= displayCount"
+        class="text-center cursor-pointer text-xs font-medium mt-8 text-[var(--show-more)]"
+        (click)="loadLess()"
+      >
+        show less <svg-icon [key]="'showless'" [size]="'sm'" class="ml-1" />
+      </div>
+      <div #bottom></div>
+    </div>
+  </div>
+</div>

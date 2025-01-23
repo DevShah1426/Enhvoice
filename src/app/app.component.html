@@ -1,0 +1,9 @@
+<router-outlet></router-outlet>
+<p-toast
+  [baseZIndex]="99999"
+  [showTransformOptions]="'translateY(100%)'"
+  [showTransitionOptions]="'500ms'"
+  [hideTransitionOptions]="'1000ms'"
+  [showTransformOptions]="'translateX(100%)'"
+/>
+<app-loader *ngIf="isLoading$ | async"></app-loader>

@@ -1,0 +1,146 @@
+<div class="bg-white rounded-2xl flex flex-row h-full gap-20 items-stretch p-5 pb-10 px-8">
+  <div class="flex flex-col items-center justify-start w-full">
+    <div class="uppercase flex justify-start mt-10 w-full flex-row font-semibold text-2xl">
+      <div class="w-full">
+        <label class="text-[#0475dd]"> upload </label>
+        <label class="text-[#000e59] ml-2"> files </label>
+      </div>
+    </div>
+    <div class="mt-8 w-full rounded-2xl flex items-center justify-center bg-[#e0f4ff] flex-col">
+      <div class="max-h-[46rem] overflow-auto p-10 py-14 w-full">
+        <div
+          class="flex items-center justify-start flex-row w-full mt-7"
+          *ngFor="let file of filesToUpload; let i = index"
+        >
+          <div class="w-full basis-11/12 flex items-center flex-row">
+            <div>
+              <svg-icon [key]="'file'" [size]="'xxl'" class="mr-5" [color]="'orange'" />
+            </div>
+            <div>
+              {{ file.name }}
+            </div>
+          </div>
+          <div class="text-right w-full basis-1/12">
+            <svg-icon [key]="'close'" [size]="'lg'" class="cursor-pointer" (click)="removeFile(i)" />
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-center flex-row pb-3 gap-5">
+        <div class="text-right">
+          <app-button
+            [disabled]="!filesToUpload.length"
+            [label]="'Upload'"
+            [icon]="'pi-upload'"
+            (onClick)="uploadFiles()"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col items-center justify-start w-full">
+    <div class="uppercase flex justify-start mt-10 w-full flex-row font-semibold text-2xl">
+      <div class="w-full">
+        <label class="text-[#0475dd]"> Select </label>
+        <label class="text-[#000e59] ml-2"> Template </label>
+      </div>
+      <div class="w-full text-right">
+        <svg-icon [key]="'file-upload-close'" [size]="'lg'" class="cursor-pointer" (click)="close()" />
+      </div>
+    </div>
+    <div class="mt-8 w-full rounded-2xl flex items-center justify-center flex-col">
+      <form [formGroup]="templateForm" class="grid grid-cols-3 gap-8 w-full">
+        <div>
+          <app-dropdown
+            [dropdownLabelClass]="'form-label'"
+            [dropdownLabel]="'Select Property'"
+            [dropdownItems]="properties"
+            [optionLabel]="'propertyGroupName'"
+            [dropdownClass]="'form-dropdown'"
+            [control]="templateForm.get('propertyId')"
+            (onSelect)="onPropertySelect($event)"
+            [selectedItem]="selectedProperty"
+          ></app-dropdown>
+        </div>
+        <div>
+          <app-dropdown
+            *ngIf="showProviderUtility"
+            [dropdownLabelClass]="'form-label'"
+            [dropdownLabel]="'Select Provider'"
+            [dropdownItems]="providers"
+            [optionLabel]="'providerName'"
+            [dropdownClass]="'form-dropdown'"
+            [control]="templateForm.get('providerId')"
+            (onSelect)="onProviderSelect($event)"
+            [selectedItem]="selectedProvider"
+          ></app-dropdown>
+        </div>
+        <div>
+          <app-dropdown
+            *ngIf="showProviderUtility"
+            [dropdownLabelClass]="'form-label'"
+            [dropdownLabel]="'Select Utility'"
+            [dropdownItems]="utilities"
+            [optionLabel]="'utilityName'"
+            [dropdownClass]="'form-dropdown'"
+            [control]="templateForm.get('utilityId')"
+            (onSelect)="onUtilitySelect($event)"
+            [selectedItem]="selectedUtility"
+          ></app-dropdown>
+        </div>
+      </form>
+      <div class="grid grid-cols-3 gap-8 max-h-[46rem] mt-5 overflow-auto">
+        <div *ngFor="let template of templates; let i = index" class="aspect-auto min-w-full">
+          <div
+            (click)="selectTemplate(template)"
+            [ngClass]="selectedTemplate == template ? 'bg-[#00147b] border-[#00147b] ' : ' border-[#02539E] '"
+            class="rounded-lg cursor-pointer border-2 py-5 px-3 h-full flex items-center justify-start flex-col"
+          >
+            <div class="text-left w-full">
+              <svg-icon
+                style="height: 40px; width: 36px"
+                [key]="'template'"
+                [color]="selectedTemplate == template ? 'white' : '#0076CC'"
+              />
+            </div>
+            <div
+              class="text-left w-full font-medium text-2xl mt-4"
+              [ngClass]="selectedTemplate == template ? 'text-white ' : 'text-[#212121]'"
+            >
+              <div class="mb-2 break-words">
+                {{ template.octType }}
+              </div>
+            </div>
+            <div
+              class="text-left w-full border-t-2 border-[#02539E] font-normal text-sm"
+              [ngClass]="selectedTemplate == template ? 'text-white ' : 'text-[var(--header-description)]'"
+            >
+              <div class="mt-2">
+                {{ template.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-center flex-row mt-3 gap-5" *ngIf="allTemplates.length > 0">
+        <div class="text-right">
+          <svg-icon
+            (click)="loadPreviousTemplates()"
+            [key]="'previous'"
+            [size]="'md'"
+            [color]="'#454545'"
+            class="cursor-pointer"
+          />
+        </div>
+        <div class="text-left">
+          <svg-icon
+            (click)="loadNextTemplates()"
+            [key]="'next'"
+            [size]="'md'"
+            [color]="'#454545'"
+            class="cursor-pointer"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

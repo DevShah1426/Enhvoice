@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="w-full p-9" *appHasPermission="'reports'">
+  <div class="w-full rounded-2xl bg-white flex flex-row items-center">
+    <div class="w-full">
+      <app-title-card [title]="'Reports'" [description]="''"></app-title-card>
+    </div>
+    <div class="w-full text-right px-4">
+      <app-menu-button
+        [buttonHeight]="'45'"
+        [label]="'Download Reports'"
+        [icon]="'pi-download'"
+        [items]="menuItems"
+      ></app-menu-button>
+    </div>
+  </div>
+  <div class="flex flex-row bg-white rounded-t-2xl py-6 px-4 mt-9 items-center w-full">
+    <form [formGroup]="filterForm" class="overflow-auto">
+      <div class="w-full gap-5 flex flex-row items-center h-full basis-3/5">
+        <div class="basis-1/4">
+          <app-datepicker
+            [inputClass]="'form-datepicker'"
+            [labelClass]="'form-label'"
+            [inputLabel]="'From Date'"
+            [control]="filterForm.get('fromDate')"
+            (onDateChange)="getDates()"
+          ></app-datepicker>
+        </div>
+        <div class="basis-1/4">
+          <app-datepicker
+            [inputClass]="'form-datepicker'"
+            [labelClass]="'form-label'"
+            [inputLabel]="'To Date'"
+            [control]="filterForm.get('toDate')"
+            (onDateChange)="getDates()"
+          ></app-datepicker>
+        </div>
+        <div class="basis-1/4">
+          <div class="form-label mb-2">Filter</div>
+          <svg-icon [key]="'filter'" [size]="'lg'" class="cursor-pointer" (click)="openFilter()" />
+        </div>
+      </div>
+    </form>
+    <div class="w-full flex items-center justify-end basis-2/3 pt-5">
+      <app-toggle-switch
+        [labelClass]="'form-label'"
+        [inputLabel]="'Show Only Verified'"
+        (checkedChange)="getVerifiedRecords($event)"
+      ></app-toggle-switch>
+    </div>
+  </div>
+  <app-table [checkboxSelectionVisible]="false" [dataList]="dataList" [dataColumns]="dataColumns"></app-table>
+</div>

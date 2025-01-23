@@ -1,0 +1,21 @@
+<div class="flex flex-col h-full">
+  <div>
+    <app-header></app-header>
+  </div>
+  <div class="flex flex-col h-full px-8 py-5">
+    <div class="flex flex-row items-center cursor-pointer w-fit text-[#0075CA]" (click)="back()">
+      <div class="flex items-center mr-2">
+        <svg-icon key="arrow-left" [size]="'md'" class="cursor-pointer" />
+      </div>
+      <div>Back</div>
+    </div>
+    <div class="flex flex-row h-[84vh] gap-5 mt-3">
+      <div class="w-full h-full">
+        <app-pdf-viewer [filePath]="filePath"></app-pdf-viewer>
+      </div>
+      <div class="w-full h-full">
+        <app-dynamic-result-form *ngIf="transactionId" [transactionId]="transactionId"></app-dynamic-result-form>
+      </div>
+    </div>
+  </div>
+</div>

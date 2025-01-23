@@ -1,0 +1,31 @@
+<app-header></app-header>
+<div class="w-full p-9">
+  <div class="flex flex-row bg-white rounded-t-2xl py-6 px-4 items-center w-full">
+    <div class="w-full">
+      <app-search-input (searchTextChange)="onSearchTextChange($event)"></app-search-input>
+    </div>
+    <div class="w-full text-right">
+      <app-button
+        *appHasPermission="'addUtilities'"
+        (onClick)="addEditRecord()"
+        [label]="'Add Utility'"
+        [icon]="'pi-user-plus'"
+      ></app-button>
+    </div>
+  </div>
+  <ng-container *appHasPermission="'viewUtilities'">
+    <app-table
+      *ngIf="dataList.length > 0"
+      [actionPermissions]="actionPermissions"
+      [checkboxSelectionVisible]="false"
+      [dataList]="dataList"
+      [dataColumns]="dataColumns"
+      [actionsVisible]="true"
+      [svgIcons]="[
+        { action: 'edit', icon: 'edit' },
+        { action: 'delete', icon: 'delete' }
+      ]"
+      (actionClick)="onActionClick($event)"
+    ></app-table>
+  </ng-container>
+</div>

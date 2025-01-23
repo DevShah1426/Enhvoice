@@ -1,0 +1,195 @@
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@import "primeicons/primeicons.css";
+/* @import "primeng/resources/themes/nano/theme.css"; */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+:root {
+  --primary-color: #272727;
+  --secondary-color: #323131;
+  --tertiary-color: #6b6b6b;
+
+  /* Login */
+  --login-input: #153060;
+  --login-bg: #fafafa;
+  --login-border: #9badca;
+  --login-button-bg: #00147b;
+  --login-button-text: #ffffff;
+
+  /* Sidenav */
+  --sidenav-bg: #021263;
+  --sidenav-text: #ffffff;
+  --sidenav-hover-bg: #ffffff;
+  --sidenav-hover-text: #021263;
+  --sidenav-active-bg: #ffffff;
+  --sidenav-active-text: #262637;
+
+  /* Button */
+  --button-primary-bg: #00147b;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #ffffff;
+  --button-secondary-text: #00147b;
+
+  /* Header */
+  --header-text: #000e59;
+  --header-description: #919191;
+
+  /* Table */
+  --table-header-text: #6b6b6b;
+  --table-data: #262637;
+
+  /* Content Dialog */
+  --content-dialog-text: #000e59;
+  --content-dialog-bg: #d8f1ff;
+
+  /* Input */
+  --input-border: #c4c4c4;
+
+  /* Transactions */
+  --recent-uploads: #4b4b4b;
+  --file-name: #454545;
+  --show-more: #939393;
+
+  font-family: InterVariable, sans-serif;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  background-color: var(--secondary-color);
+}
+
+*:focus {
+  outline: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--header-description);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--recent-uploads);
+}
+
+.login-input {
+  color: var(--login-input);
+  background-color: var(--login-bg);
+  border: 1px solid var(--login-border);
+  border-radius: 5px;
+  height: 50px !important;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.p-inputtext:enabled:focus {
+  box-shadow: none;
+}
+
+.p-dialog .p-dialog-content {
+  padding: 0 !important;
+  @apply rounded-lg;
+}
+
+.p-dialog-right .p-dialog {
+  @apply rounded-lg;
+}
+
+.enhancor-p-button {
+  @apply bg-[var(--button-primary-bg)] text-[var(--button-primary-text)] font-medium rounded-[10px] h-10 border-none;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  border-width: 0px;
+  @apply border-none bg-transparent font-medium text-base text-[var(--table-header-text)];
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  border-width: 0px;
+  @apply py-3 border-none font-normal text-base text-[var(--table-data)];
+}
+
+.form-input {
+  @apply w-full h-10 border-[1px] border-[var(--input-border)] rounded-lg px-4;
+}
+.form-label {
+  @apply text-xs font-medium text-[var(--primary-color)];
+}
+.form-button {
+  @apply h-10 px-5;
+}
+
+.p-dropdown {
+  @apply rounded-[10px] border-[1px] border-[#a3a3a3] w-full;
+}
+.form-dropdown-label {
+  @apply text-sm font-normal text-[#263238];
+}
+
+/* .p-menu p-component */
+.p-menu {
+  @apply rounded-md w-[210px];
+}
+.form-dropdown {
+  @apply w-full h-10 border-[1px] border-[var(--input-border)] rounded-lg;
+}
+.p-inputswitch .p-inputswitch-slider {
+  background-color: #919191;
+}
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background-color: #00c242;
+}
+.p-calendar {
+  @apply w-full;
+}
+.p-calendar > .p-inputtext {
+  @apply w-full h-10 border-[1px] border-[var(--input-border)] rounded-lg;
+}
+.p-overlaypanel .p-overlaypanel-content {
+  padding: 0;
+}
+.p-overlaypanel {
+  margin-left: -10px;
+}
+.p-dialog .p-dialog-header {
+  padding: 0;
+}
+.p-selectbutton .p-button.p-highlight {
+  background: var(--button-primary-bg);
+  border: var(--button-primary-bg);
+}
+.p-selectbutton .p-button {
+  height: 40px;
+}
+.p-button-focus {
+  box-shadow: none;
+}
+.p-dropdown .p-dropdown-label {
+  margin-top: -5px;
+}
+.p-disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}

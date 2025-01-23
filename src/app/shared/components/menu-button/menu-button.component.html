@@ -1,0 +1,12 @@
+<p-menu #menu [model]="items" [popup]="true" />
+<button
+  pButton
+  [label]="label"
+  [icon]="'pi ' + icon"
+  iconPos="right"
+  class="enhancor-p-button"
+  [ngClass]="buttonClass"
+  (click)="menu.toggle($event)"
+  [disabled]="disabled"
+  [style.height.px]="buttonHeight"
+></button>

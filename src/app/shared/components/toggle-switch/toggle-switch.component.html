@@ -1,0 +1,4 @@
+<div class="flex flex-col gap-1">
+  <label [ngClass]="labelClass">{{ inputLabel }}</label>
+  <p-inputSwitch class="mt-1" [formControl]="checked" (onChange)="onChange($event)" />
+</div>

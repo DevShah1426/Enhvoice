@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.container .main-body {
+  width: 100%;
+}
+
+.container aside {
+  width: 300px; /* Display sidebar by default */
+  overflow-y: auto;
+  transition: all 0.5s;
+  background-color: var(--sidenav-bg);
+}
+
+.container:not(.expanded) aside {
+  width: 0;
+}
+
+.main-body {
+  background: #f0f8ff;
+  @apply h-full overflow-auto;
+}
+
+.active {
+  background-color: var(--sidenav-active-bg);
+  color: var(--sidenav-active-text);
+}
+
+.active-svg {
+  fill: yellow;
+  stroke: yellow;
+}
+
+.sidenav-item:hover {
+  background-color: #414d8a;
+  color: white;
+}
+
+.collapsible {
+  @apply h-7 flex items-center flex-row;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+}
+
+.collapsible:after {
+  margin-top: -10px;
+  content: "⌄";
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 100px;
+}
+
+.expand:after {
+  margin-top: 0px;
+  content: "⌃";
+}
+
+.content {
+  @apply w-full;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}

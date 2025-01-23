@@ -1,0 +1,68 @@
+<div class="rounded-lg">
+  <div
+    class="w-full flex flex-row items-center bg-[var(--content-dialog-bg)] text-[var(--content-dialog-text)] px-4 py-1"
+  >
+    <div class="text-xl w-full font-medium leading-10">Add New Property</div>
+    <div class="w-full text-right">
+      <svg-icon key="close" [size]="'md'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <form class="mt-5" [formGroup]="groupForm">
+      <!-- Property Information -->
+      <div class="text-[var(--secondary-color)] font-semibold text-lg leading-5">Property Information</div>
+      <div class="text-[var(--tertiary-color)] font-medium text-sm">Enter details</div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-input
+          class="w-2/3"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Property Name'"
+          [control]="groupForm.get('propertyGroupName')"
+          [readOnly]="config.data ? true : false"
+        ></app-input>
+        <app-input
+          class="w-1/3"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Yardi ID'"
+          [control]="groupForm.get('propertyYardyId')"
+        ></app-input>
+      </div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-input
+          class="w-full"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Country'"
+          [readOnly]="true"
+          [control]="groupForm.get('country')"
+        ></app-input>
+        <app-input
+          class="w-full"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'State'"
+          [control]="groupForm.get('state')"
+        ></app-input>
+        <app-input
+          class="w-full"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'City'"
+          [control]="groupForm.get('city')"
+        ></app-input>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="w-full mt-9 text-center mb-4">
+        <app-button
+          [disabled]="!groupForm.valid"
+          [buttonClass]="'form-button'"
+          [label]="buttonLabel"
+          (onClick)="addGroup()"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

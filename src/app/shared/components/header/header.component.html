@@ -1,0 +1,21 @@
+<div class="h-[70px] bg-white flex flex-row items-center justify-between px-10 pl-14">
+  <div class="flex flex-row items-start font-semibold text-2xl text-[var(--header-text)]">
+    <div class="mr-5">
+      <svg-icon [key]="icon" [size]="'lg'" />
+    </div>
+    <div>{{ title }}</div>
+  </div>
+  <div class="flex items-center justify-end">
+    <div class="flex items-center flex-row">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <g fill="none" stroke="#021263" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2" />
+            <path d="M4.271 18.346S6.5 15.5 12 15.5s7.73 2.846 7.73 2.846M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
+          </g>
+        </svg>
+      </div>
+      <div class="ml-2 font-normal text-lg text-[#262637]">{{ usrFullName }}</div>
+    </div>
+  </div>
+</div>

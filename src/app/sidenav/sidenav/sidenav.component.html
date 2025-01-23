@@ -1,0 +1,66 @@
+<div class="container min-w-full" [ngClass]="{ expanded: isSidebarVisible }">
+  <aside>
+    <div class="mt-36 px-4">
+      <div *ngFor="let menu of menuItems" class="text-white cursor-pointer flex items-center flex-row justify-start">
+        <div *ngIf="menu.isBlank" class="border-t-[1px] border-white h-fit w-full"></div>
+        <div
+          [routerLink]="menu.routerLink"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [ngClass]="!menu.isBlank && menu.routerLink != activeRoute ? 'sidenav-item' : ''"
+          *ngIf="!menu.isBlank && !menu.expandable && menu.visible"
+          class="w-full flex items-center mt-2 flex-row justify-start p-2"
+          (click)="setActiveRoute(menu)"
+        >
+          <div class="mr-2 flex items-center">
+            <svg-icon [key]="menu.icon" size="lg" />
+          </div>
+          <div class="text-lg">
+            {{ menu.name }}
+          </div>
+        </div>
+        <div *ngIf="!menu.isBlank && menu.expandable" class="mt-2 w-full flex items-center flex-col justify-start p-2">
+          <div class="collapsible" (click)="toggleContent($event)">
+            <div class="mr-2 flex items-center">
+              <svg-icon [key]="menu.icon" size="lg" />
+            </div>
+            <div class="text-lg">
+              {{ menu.name }}
+            </div>
+          </div>
+          <div class="content">
+            <ng-container *ngFor="let child of menu.children">
+              <div
+                *ngIf="child.visible"
+                class="flex flex-row px-5 py-1 mt-2"
+                (click)="setActiveRoute(child)"
+                [routerLink]="child.routerLink"
+                [routerLinkActive]="'active'"
+                [ngClass]="!menu.isBlank && child.routerLink != activeRoute ? 'sidenav-item' : ''"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <div class="mr-2 flex items-center">
+                  <svg-icon [key]="child.icon" size="lg" />
+                </div>
+                <div class="text-lg">
+                  {{ child.name }}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="main-body">
+    <div class="relative">
+      <svg-icon
+        [key]="'transactionform'"
+        (click)="toggleSidebar()"
+        class="absolute top-6 left-2 cursor-pointer"
+        [size]="'md'"
+      />
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="rounded-lg">
+  <div
+    class="w-full flex flex-row items-center bg-[var(--content-dialog-bg)] text-[var(--content-dialog-text)] px-4 py-1"
+  >
+    <div class="text-xl w-full font-medium leading-10">Manage Permissions</div>
+    <div class="w-full text-right">
+      <svg-icon key="close" [size]="'md'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <form class="mt-4" [formGroup]="permissionsForm">
+      <!-- Group Information -->
+      <div class="text-[var(--secondary-color)] font-semibold text-lg leading-5">User Group Information</div>
+      <div class="text-[var(--tertiary-color)] font-medium text-sm">Enter details of the group here</div>
+
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-input
+          class="w-1/4"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Group Name'"
+          [control]="permissionsForm.get('ugpName')"
+        ></app-input>
+        <app-input
+          class="w-1/4"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Group Details'"
+          [control]="permissionsForm.get('ugpDetails')"
+        ></app-input>
+      </div>
+
+      <!-- Group Information -->
+      <div class="text-[var(--secondary-color)] font-semibold text-lg leading-5 mt-3">User Group Permissions</div>
+      <div class="grid grid-cols-3 gap-5 mt-5">
+        <div
+          class="flex flex-row items-center justify-center basis-1/4 border border-[#c4c4c4] rounded-md p-3"
+          *ngFor="let permission of permissions; let i = index"
+        >
+          <div
+            class="h-[40px] w-[40px] aspect-square bg-[var(--sidenav-bg)] rounded border-2 border-[var(--sidenav-bg)] flex items-center justify-center"
+          >
+            <svg-icon [key]="permission.icon" [size]="'lg'" [color]="'white'"></svg-icon>
+          </div>
+          <div class="w-full flex flex-col items-start justify-start px-5">
+            <div class="h-fit m-0 p-0">
+              <label class="text-[var(--file-name)] text-sm font-medium"> {{ permission.title }} </label>
+            </div>
+            <div class="h-fit m-0 p-0">
+              <label class="text-[var(--header-description)] text-xs font-normal"> {{ permission.description }} </label>
+            </div>
+          </div>
+          <div class="w-[40px]">
+            <p-inputSwitch [formControlName]="permission.form" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="w-full mt-12 text-center mb-4">
+        <app-button
+          [disabled]="!permissionsForm.valid"
+          [buttonClass]="'form-button'"
+          [label]="'Save & Continue'"
+          (onClick)="triggerAction()"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

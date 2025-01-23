@@ -1,0 +1,30 @@
+<form [formGroup]="filterForm">
+  <div class="grid grid-cols-4 w-full gap-5 items-center justify-center">
+    <div class="w-full max-w-full">
+      <app-dropdown
+        [dropdownLabel]="'Filter By Year'"
+        [dropdownItems]="years"
+        [selectedItem]="selectedYear"
+        (onSelect)="onYearSelect($event.value)"
+        [control]="filterForm.get('year')"
+        [optionLabel]="'value'"
+      ></app-dropdown>
+    </div>
+    <div class="w-full max-w-full">
+      <app-dropdown
+        [dropdownLabel]="'Filter By Month'"
+        [dropdownItems]="months"
+        [selectedItem]="selectedMonth"
+        (onSelect)="onMonthSelect($event.value)"
+        [control]="filterForm.get('month')"
+        [optionLabel]="'label'"
+      ></app-dropdown>
+    </div>
+    <div class="w-full mt-5">
+      <app-button [label]="'Search'" [icon]="'pi-search'" (onClick)="applyFilter()"></app-button>
+    </div>
+    <div class="w-full mt-5 text-left">
+      <label class="cursor-pointer hover:underline" (click)="resetFilter()">Reset Filter</label>
+    </div>
+  </div>
+</form>

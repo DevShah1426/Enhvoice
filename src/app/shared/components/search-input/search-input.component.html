@@ -1,0 +1,15 @@
+<div class="flex flex-col">
+  <p-iconField iconPosition="right">
+    <p-inputIcon styleClass="pi pi-search" (click)="onSearchTextChange($event)" />
+    <input
+      type="text"
+      class="rounded-[10px] border-[1px] border-[#A3A3A3] w-3/4"
+      [ngClass]="height"
+      pInputText
+      [placeholder]="placeholder"
+      [(ngModel)]="searchText"
+      (keydown.enter)="onSearchTextChange($event)"
+    />
+  </p-iconField>
+  <small class="text-[12px] font-light text-gray-700"> Press enter to search </small>
+</div>

@@ -1,0 +1,8 @@
+<p-checkbox
+  [disabled]="disabled"
+  [(ngModel)]="checked"
+  [binary]="true"
+  inputId="cb"
+  (onChange)="checkboxChecked($event)"
+/>
+<label class="ml-2" for="cb">{{ label }}</label>

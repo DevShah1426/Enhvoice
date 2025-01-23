@@ -1,0 +1,45 @@
+<div class="rounded-lg">
+  <div
+    class="w-full flex flex-row items-center bg-[var(--content-dialog-bg)] text-[var(--content-dialog-text)] px-4 py-1"
+  >
+    <div class="text-xl w-full font-medium leading-10">{{ config.data ? "Edit" : "Add New" }} Service Address</div>
+    <div class="w-full text-right">
+      <svg-icon key="close" [size]="'md'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <form class="mt-5" [formGroup]="propertyForm">
+      <div class="text-[var(--secondary-color)] font-semibold text-lg leading-5">Service Address Information</div>
+      <div class="text-[var(--tertiary-color)] font-medium text-sm">Enter details of the property</div>
+      <div class="flex flex-row items-center justify-start gap-5 mt-5">
+        <app-dropdown
+          class="w-1/4 -mt-4"
+          [dropdownLabelClass]="'form-label'"
+          [dropdownLabel]="'Select Property'"
+          [dropdownItems]="groups"
+          [optionLabel]="'propertyGroupName'"
+          [dropdownClass]="'form-dropdown'"
+          (onSelect)="onSelect($event)"
+          [control]="propertyForm.get('pgId')"
+          [selectedItem]="selectedGroup"
+        ></app-dropdown>
+        <app-input
+          class="w-1/4"
+          [inputClass]="'form-input'"
+          [labelClass]="'form-label'"
+          [inputLabel]="'Service Address'"
+          [control]="propertyForm.get('serviceBlockFullAddress')"
+        ></app-input>
+      </div>
+      <!-- Submit Button -->
+      <div class="w-full mt-9 text-center mb-4">
+        <app-button
+          [disabled]="!propertyForm.valid"
+          [buttonClass]="'form-button'"
+          [label]="buttonLabel"
+          (onClick)="addProperty()"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

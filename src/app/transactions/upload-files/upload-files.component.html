@@ -1,0 +1,34 @@
+<div class="bg-white rounded-2xl flex items-center justify-center flex-col p-5 px-8" *ngIf="uploadFileVisible">
+  <div class="flex flex-row items-center justify-between w-full">
+    <div class="uppercase flex justify-start mt-5 w-full font-semibold text-2xl">
+      <label class="text-[#0475dd]"> upload </label>
+      <label class="text-[#000e59] ml-2"> files </label>
+    </div>
+    <div class="text-right mt-5">
+      <svg-icon [key]="'file-upload-close'" [size]="'lg'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div
+    class="bg-[#e0f4ff] border-4 mt-8 border-dashed border-[#319BE9] w-full rounded-2xl h-[651px] flex items-center justify-center flex-col"
+  >
+    <div>
+      <img src="/assets/file_upload_bg.svg" alt="file_upload" />
+    </div>
+    <div class="text-[#02539e] cursor-pointer font-medium text-base underline mt-5" (click)="file.click()">Browse</div>
+  </div>
+  <input
+    #file
+    class="hidden"
+    type="file"
+    (change)="fileChange($event)"
+    multiple
+    placeholder="Upload file"
+    accept=".pdf"
+  />
+</div>
+
+<app-template-selection
+  [filesToUpload]="filesToUpload"
+  *ngIf="!uploadFileVisible"
+  (closeDialog)="close()"
+></app-template-selection>

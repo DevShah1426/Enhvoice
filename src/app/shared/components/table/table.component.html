@@ -1,0 +1,49 @@
+<div class="flex items-center justify-center w-full">
+  <p-table
+    *ngIf="dataList.length > 0"
+    [columns]="dataColumns"
+    [value]="dataList"
+    [(selection)]="selectedRecords"
+    (selectionChange)="onSelectionChange($event)"
+    dataKey="id"
+    class="w-full"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [rowHover]="true"
+    [paginator]="true"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngIf="checkboxSelectionVisible" style="width: 4rem"><p-tableHeaderCheckbox /></th>
+        <th *ngFor="let col of columns" [ngStyle]="{ width: col.width }">
+          {{ col.header }}
+        </th>
+        <th *ngIf="actionsVisible" style="width: 5rem">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-record let-columns="columns">
+      <tr>
+        <td *ngIf="checkboxSelectionVisible">
+          <p-tableCheckbox [value]="record" />
+        </td>
+        <td *ngFor="let col of columns">
+          {{ record[col.field] ? record[col.field] : "-" }}
+        </td>
+        <td *ngIf="actionsVisible">
+          <div class="flex flex-row w-full items-center gap-5 justify-end px-3">
+            <div *ngFor="let svg of svgIcons">
+              <ng-container *ngIf="actionPermissions[svg.action]">
+                <svg-icon
+                  [key]="svg.icon"
+                  [size]="'lg'"
+                  class="cursor-pointer"
+                  (click)="onActionClick(svg.action, record)"
+                />
+              </ng-container>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

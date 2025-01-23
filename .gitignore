@@ -1,0 +1,46 @@
+# Covers Angular in node environment
+node_modules/
+build/
+dist/
+.env
+tmp/
+coverage/
+out-tsc/
+.angular/
+
+
+# VSCode
+.vscode/
+
+# Eclipse
+.settings/
+*.project
+*.classpath
+.prefs
+*.prefs
+.metadata/
+
+# Maven
+log/*
+target/
+
+# Gradle
+.gradle/
+
+*/bin/*
+bin/
+*.log
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+*.iml
+yarn.lock
+package-lock.json
+
+
+
+

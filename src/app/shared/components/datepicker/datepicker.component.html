@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-1">
+  <label [ngClass]="labelClass">{{ inputLabel }}</label>
+  <p-calendar
+    readonlyInput="true"
+    [formControl]="control"
+    [ngClass]="inputClass"
+    placeholder="{{ inputPlaceholder }}"
+    [iconDisplay]="'input'"
+    [showIcon]="true"
+    appendTo="body"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    inputId="icondisplay"
+    (onSelect)="onDateChangeHandler($event)"
+  />
+</div>

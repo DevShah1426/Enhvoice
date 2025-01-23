@@ -1,0 +1,23 @@
+<label [ngClass]="dropdownLabelClass">{{ dropdownLabel }}</label>
+<p-multiSelect
+  [styleClass]="'form-dropdown'"
+  [options]="dropdownItems"
+  [(ngModel)]="selectedItem"
+  (onChange)="onChange($event)"
+  [optionLabel]="optionLabel"
+  [filter]="true"
+  [filterBy]="optionLabel"
+  [showClear]="false"
+  appendTo="body"
+>
+  <ng-template pTemplate="selectedItem" let-selectedOption>
+    <div class="flex align-items-center gap-2">
+      <div>{{ selectedOption[optionLabel] }}</div>
+    </div>
+  </ng-template>
+  <ng-template let-country pTemplate="item">
+    <div class="flex align-items-center gap-2">
+      <div>{{ country[optionLabel] }}</div>
+    </div>
+  </ng-template>
+</p-multiSelect>

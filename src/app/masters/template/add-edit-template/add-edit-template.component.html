@@ -1,0 +1,89 @@
+<div class="rounded-lg">
+  <div
+    class="w-full flex flex-row items-center bg-[var(--content-dialog-bg)] text-[var(--content-dialog-text)] px-4 py-1"
+  >
+    <div class="text-xl w-full font-medium leading-10">
+      {{ hasPreviousData ? "Edit" : "Add New" }} Property for <br />
+      {{ config.data.octType }}
+    </div>
+    <div class="w-full text-right">
+      <svg-icon key="close" [size]="'md'" class="cursor-pointer" (click)="close()" />
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <div [formGroup]="form">
+      <app-button
+        *ngIf="rows.length < 150"
+        [buttonClass]="'form-button'"
+        [label]="'Add New Row'"
+        [disabled]="!form.valid"
+        [icon]="'pi-plus'"
+        (onClick)="addNewRow()"
+      ></app-button>
+
+      <table class="w-full mt-5">
+        <thead>
+          <tr class="text-left bg-[#F0F8FF] leading-10">
+            <th style="width: 80%" class="pl-5">Property</th>
+            <th style="width: 20%" class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="rows">
+          <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" class="hover:bg-[#f3f4f6]">
+            <td class="px-5 py-3">
+              <ng-container *ngIf="!row.get('isSaved')?.value; else savedDropdown">
+                <div>
+                  <app-dropdown
+                    [dropdownItems]="properties"
+                    [dropdownLabel]="''"
+                    [dropdownLabelClass]="'form-label'"
+                    [optionLabel]="'propertyGroupName'"
+                    [selectedItem]="selectedProperty"
+                    (onSelect)="onPropertySelect($event.value, i)"
+                  ></app-dropdown>
+                </div>
+              </ng-container>
+              <ng-template #savedDropdown>
+                <span>{{ row.get("pgId")?.value.propertyGroupName }}</span>
+              </ng-template>
+            </td>
+
+            <td class="text-center py-3">
+              <div class="flex flex-row items-center justify-center gap-8">
+                <div *ngIf="row.get('hasPreviousData')?.value">
+                  <button [disabled]="!isEditClicked" class="btn btn-primary">
+                    <svg-icon
+                      [key]="'edit'"
+                      [size]="'lg'"
+                      class="cursor-pointer"
+                      (click)="editRow(i)"
+                      *ngIf="row.get('isSaved')?.value"
+                    />
+                  </button>
+                </div>
+                <div *ngIf="row.get('hasPreviousData')?.value">
+                  <svg-icon
+                    [key]="'delete'"
+                    [size]="'lg'"
+                    class="cursor-pointer"
+                    (click)="deleteRow(i)"
+                    *ngIf="row.get('isSaved')?.value"
+                  />
+                </div>
+                <div>
+                  <svg-icon
+                    [key]="'save'"
+                    [size]="'lg'"
+                    class="cursor-pointer"
+                    (click)="saveRow(i)"
+                    *ngIf="!row.get('isSaved')?.value"
+                  />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

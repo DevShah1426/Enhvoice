@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="w-full p-9">
+  <div class="flex flex-row bg-white rounded-t-2xl py-6 px-4 items-center w-full">
+    <div class="w-full">
+      <app-search-input (searchTextChange)="onSearchTextChange($event)"></app-search-input>
+    </div>
+    <div class="w-full text-right"></div>
+  </div>
+  <ng-container *appHasPermission="'viewTemplate'">
+    <app-table
+      *ngIf="dataList.length > 0"
+      [actionPermissions]="actionPermissions"
+      [checkboxSelectionVisible]="false"
+      [dataList]="dataList"
+      (recordSelected)="onRecordSelected($event)"
+      [dataColumns]="dataColumns"
+      [actionsVisible]="true"
+      [svgIcons]="[
+        { action: 'delete', icon: 'delete' },
+        { action: 'propertyAssociation', icon: 'add' }
+      ]"
+      (actionClick)="onActionClick($event)"
+    ></app-table>
+  </ng-container>
+</div>

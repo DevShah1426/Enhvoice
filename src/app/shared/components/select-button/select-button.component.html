@@ -1,0 +1,10 @@
+<form [formGroup]="formGroup">
+  <p-selectButton
+    [options]="options"
+    [unselectable]="true"
+    formControlName="value"
+    optionLabel="label"
+    optionValue="value"
+    (onChange)="onChange($event)"
+  />
+</form>

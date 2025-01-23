@@ -1,0 +1,32 @@
+<div class="flex flex-col gap-1">
+  <div class="flex flex-row items-center">
+    <div class="w-full flex flex-col">
+      <label [ngClass]="labelClass">{{ inputLabel }}</label>
+      <input
+        pInputText
+        type="{{ inputType }}"
+        placeholder="{{ inputPlaceholder }}"
+        [ngClass]="inputClass"
+        [formControl]="control"
+        [readOnly]="readOnly"
+      />
+    </div>
+    <div *ngIf="showAddIcon">
+      <svg-icon key="add" [size]="'lg'" class="cursor-pointer mt-7 ml-2" (click)="addRecord(inputLabel)" />
+    </div>
+    <div *ngIf="showRemoveIcon">
+      <svg-icon key="minus" [size]="'md'" class="cursor-pointer mt-7 ml-2" (click)="removeRecord(inputLabel)" />
+    </div>
+  </div>
+  <div class="h-2">
+    <div *ngIf="control.invalid && (control.dirty || control.touched)">
+      <div class="text-xs font-medium text-red-600" *ngIf="control.errors?.required">This field is required.</div>
+      <div class="text-xs font-medium text-red-600" *ngIf="control.errors?.minlength">
+        Minimum length is {{ control.errors?.minlength.requiredLength }}.
+      </div>
+      <div class="text-xs font-medium text-red-600" *ngIf="control.errors?.maxlength">
+        Maximum length is {{ control.errors?.maxlength.requiredLength }}.
+      </div>
+    </div>
+  </div>
+</div>

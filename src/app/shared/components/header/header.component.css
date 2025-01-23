@@ -1,0 +1,35 @@
+.notification-container {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 10px;
+  }
+  
+  .msg-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #ccc;
+    width: 100%;
+    max-width: 500px;
+    align-items: flex-start;
+  }
+  
+  .msg-name {
+    margin: 0;
+    font-weight: bold;
+    align-self: flex-start;
+  }
+  
+  .msg-email, .msg-msg {
+    margin: 0;
+    align-self: flex-start;
+  }
+  

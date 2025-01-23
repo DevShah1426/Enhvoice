@@ -1,0 +1,69 @@
+<div class="bg-white h-full" *ngIf="transactionsVisible">
+  <app-header></app-header>
+  <div class="w-full p-9 border-t border-t-[#cbcbcb] bg-white">
+    <div class="flex flex-row w-full">
+      <div class="basis-1/4 w-full bg-[#F4FBFF]" style="max-width: 25%; word-break: break-all">
+        <app-uploaded-folders
+          *ngIf="folderListVisible"
+          [uploadedFolders]="uploadedFolders"
+          [selectedFolder]="selectedFolder"
+          (selectedFolderChange)="getFolderDetails($event)"
+        ></app-uploaded-folders>
+      </div>
+      <div class="w-full px-10">
+        <div class="flex flex-row items-center w-full">
+          <div class="min-w-fit w-fit">
+            <app-select-button
+              [value]="activeSelection"
+              (onSelectionChange)="onSelectionChange($event)"
+              [options]="selectButtonOptions"
+            ></app-select-button>
+          </div>
+
+          <div class="min-w-fit w-fit text-right">
+            <app-button
+              *appHasPermission="'upload'"
+              (onClick)="uploadFile()"
+              [label]="'Upload New File'"
+              [icon]="'pi-upload'"
+            ></app-button>
+          </div>
+        </div>
+        <div class="my-5 w-full">
+          <div class="flex flex-row w-full">
+            <div class="min-w-full" *ngIf="activeSelection == 'batch'">
+              <app-batchwise-filter (onFilter)="onFilter($event, 'batch')"></app-batchwise-filter>
+            </div>
+            <div class="flex flex-row w-full" *ngIf="activeSelection == 'property'">
+              <div class="w-full">
+                <app-propertywise-filter (onFilter)="onFilter($event, 'property')"></app-propertywise-filter>
+              </div>
+              <div class="w-96 text-center mt-5">
+                <app-search-input
+                  [placeholder]="'Account Number'"
+                  *ngIf="filterBody.year && filterBody.month"
+                  [searchText]="searchText"
+                  (searchTextChange)="onSearchTextChange($event)"
+                ></app-search-input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5">
+          <app-folder-wise-files
+            *ngIf="selectedFolder"
+            (selectedFolder)="onRequestChange($event)"
+            [activeSelection]="activeSelection"
+            [folderDetails]="selectedFolder"
+          ></app-folder-wise-files>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="h-full" *ngIf="!transactionsVisible">
+  <app-header></app-header>
+  <div class="w-full p-9 border-t border-t-[#cbcbcb]">
+    <app-upload-files (closeEvent)="toggleTransactionVisibility()"></app-upload-files>
+  </div>
+</div>
