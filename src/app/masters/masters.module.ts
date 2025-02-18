@@ -23,6 +23,7 @@ import { AddEditProviderComponent } from "./provider/add-edit-provider/add-edit-
 import { AddEditAccountNumbersComponent } from "./property/add-edit-account-numbers/add-edit-account-numbers.component";
 import { TemplateComponent } from './template/template.component';
 import { AddEditTemplateComponent } from './template/add-edit-template/add-edit-template.component';
+import { PdfSplitterComponent } from './pdf-splitter/pdf-splitter.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddEditTemplateComponent } from './template/add-edit-template/add-edit-
     AddEditAccountNumbersComponent,
     TemplateComponent,
     AddEditTemplateComponent,
+    PdfSplitterComponent,
   ],
   imports: [
     CommonModule,

@@ -29,6 +29,7 @@ export class TransactionsComponent {
   filterBody: any = {};
   requestChangeFolder: any = null;
   searchText: string = "";
+  propertyNameSearchText: string = "";
   constructor(
     private headerService: HeaderService,
     private transactionsService: TransactionsService,
@@ -79,7 +80,9 @@ export class TransactionsComponent {
     localStorage.setItem("activeSelection", value);
     localStorage.removeItem("filter");
     localStorage.removeItem("searchText");
+    localStorage.removeItem("propertyNameSearchText");
     this.searchText = "";
+    this.propertyNameSearchText = "";
     this.activeSelection = value;
     this.filterBody = "";
     if (value == "batch") {
@@ -194,8 +197,13 @@ export class TransactionsComponent {
         let searchText = localStorage.getItem("searchText");
         if (searchText) {
           this.searchText = searchText;
-          this.onSearchTextChange(searchText);
         }
+
+        let propertyNameSearchText = localStorage.getItem("propertyNameSearchText");
+        if (propertyNameSearchText) {
+          this.propertyNameSearchText = propertyNameSearchText;
+        }
+        this.onSearchTextChange(this.searchText, this.propertyNameSearchText);
       }, 100);
     });
   }
@@ -237,6 +245,12 @@ export class TransactionsComponent {
   }
 
   onFilter(event: any, type: string) {
+    if ("clear" in event) {
+      localStorage.removeItem("searchText");
+      localStorage.removeItem("propertyNameSearchText");
+      this.searchText = "";
+      this.propertyNameSearchText = "";
+    }
     this.filterBody = event;
     localStorage.setItem("filter", JSON.stringify(event));
     if (type == "batch") {
@@ -246,35 +260,126 @@ export class TransactionsComponent {
     }
   }
 
-  onSearchTextChange(searchText: any) {
+  // onSearchTextChange(searchText: any) {
+  //   if (searchText) {
+  //     localStorage.setItem("searchText", searchText);
+  //     const searchResults = this.allRecords
+  //       .map((folder) => {
+  //         // Filter files based on the search text (case-insensitive)
+  //         const matchingFiles = folder.files.filter(
+  //           (file: any) => file.accountNumber && file.accountNumber.toLowerCase() === searchText.toLowerCase()
+  //         );
+
+  //         // Return the folder with matching files if there are any
+  //         return matchingFiles.length > 0 ? { ...folder, files: matchingFiles } : null;
+  //       })
+  //       // Remove folders with no matches
+  //       .filter((result) => result !== null);
+
+  //     this.uploadedFolders = searchResults;
+  //     this.selectedFolder = this.uploadedFolders[0];
+  //     if (searchResults.length == 0) {
+  //       // this.toastService.show({
+  //       //   severity: "error",
+  //       //   summary: "No Results Found",
+  //       //   detail: "Please try with different search criteria",
+  //       // });
+  //     }
+  //   } else {
+  //     localStorage.removeItem("searchText");
+  //     this.uploadedFolders = this.allRecords;
+  //     this.selectedFolder = this.uploadedFolders[0];
+  //   }
+  // }
+
+  // onPropertyNameSearchTextChange(searchText: any) {
+  //   if (searchText) {
+  //     localStorage.setItem("propertyNameSearchText", searchText);
+  //     const lowerSearchText = searchText.toLowerCase();
+  //     let filteredDataList = [];
+
+  //     filteredDataList = this.allRecords
+  //       .map((group) => ({
+  //         ...group,
+  //         files: group.files.filter(
+  //           (file: any) => file.propertyName && file.propertyName.toLowerCase().includes(lowerSearchText)
+  //         ),
+  //       }))
+  //       .filter((group) => group.files.length > 0); // Remove empty groups
+
+  //     this.uploadedFolders = filteredDataList;
+  //     this.selectedFolder = this.uploadedFolders[0];
+  //     if (filteredDataList.length == 0) {
+  //       // this.toastService.show({
+  //       //   severity: "error",
+  //       //   summary: "No Results Found",
+  //       //   detail: "Please try with different search criteria",
+  //       // });
+  //     }
+  //   } else {
+  //     localStorage.removeItem("propertyNameSearchText");
+  //     this.uploadedFolders = this.allRecords;
+  //     this.selectedFolder = this.uploadedFolders[0];
+  //   }
+  // }
+
+  onSearchTextChange(searchText: any, propertySearchText: any) {
+    this.searchText = searchText;
+    this.propertyNameSearchText = propertySearchText;
+    // Store the search texts in localStorage
     if (searchText) {
       localStorage.setItem("searchText", searchText);
-      const searchResults = this.allRecords
+    } else {
+      localStorage.removeItem("searchText");
+    }
+
+    if (propertySearchText) {
+      localStorage.setItem("propertyNameSearchText", propertySearchText);
+    } else {
+      localStorage.removeItem("propertyNameSearchText");
+    }
+
+    // Filter the records based on both search texts (if provided)
+    let filteredDataList = this.allRecords;
+
+    // If searchText is provided, filter based on accountNumber
+    if (searchText) {
+      filteredDataList = filteredDataList
         .map((folder) => {
-          // Filter files based on the search text (case-insensitive)
           const matchingFiles = folder.files.filter(
             (file: any) => file.accountNumber && file.accountNumber.toLowerCase() === searchText.toLowerCase()
           );
-
-          // Return the folder with matching files if there are any
           return matchingFiles.length > 0 ? { ...folder, files: matchingFiles } : null;
         })
-        // Remove folders with no matches
         .filter((result) => result !== null);
+    }
 
-      this.uploadedFolders = searchResults;
-      this.selectedFolder = this.uploadedFolders[0];
-      if (searchResults.length == 0) {
-        // this.toastService.show({
-        //   severity: "error",
-        //   summary: "No Results Found",
-        //   detail: "Please try with different search criteria",
-        // });
-      }
-    } else {
+    // If propertySearchText is provided, filter based on propertyName
+    if (propertySearchText) {
+      const lowerSearchText = propertySearchText.toLowerCase();
+      filteredDataList = filteredDataList
+        .map((group) => ({
+          ...group,
+          files: group.files.filter(
+            (file: any) => file.propertyName && file.propertyName.toLowerCase().includes(lowerSearchText)
+          ),
+        }))
+        .filter((group) => group.files.length > 0); // Remove empty groups
+    }
+
+    // Update the state with the filtered results
+    this.uploadedFolders = filteredDataList;
+    this.selectedFolder = this.uploadedFolders.length > 0 ? this.uploadedFolders[0] : null;
+
+    // If no results found, you can show an error message
+    if (filteredDataList.length === 0) {
       localStorage.removeItem("searchText");
-      this.uploadedFolders = this.allRecords;
-      this.selectedFolder = this.uploadedFolders[0];
+      localStorage.removeItem("propertyNameSearchText");
+      // this.toastService.show({
+      //   severity: "error",
+      //   summary: "No Results Found",
+      //   detail: "Please try with different search criteria",
+      // });
     }
   }
 }

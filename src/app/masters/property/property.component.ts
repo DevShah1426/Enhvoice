@@ -9,6 +9,8 @@ import { AlertDialogService } from "../../shared/services/alert-dialog.service";
 import { Subscription } from "rxjs";
 import { AddEditAccountNumbersComponent } from "./add-edit-account-numbers/add-edit-account-numbers.component";
 import { PermissionService } from "../../shared/services/permission.service";
+import { MenuItem } from "primeng/api";
+import { ExportExcelService } from "../../shared/services/export-excel.service";
 
 @Component({
   selector: "app-property",
@@ -21,14 +23,28 @@ export class PropertyComponent implements OnDestroy, OnInit {
   allRecords: any[] = [];
   searchText: string = "";
   actionPermissions: { [key: string]: boolean } = {};
-
+  menuItems: MenuItem[] = [
+    {
+      label: "Service Address",
+      command: () => {
+        this.downloadExcel();
+      },
+    },
+    {
+      label: "Account Numbers",
+      command: () => {
+        this.getActiveAccountNumbers();
+      },
+    },
+  ];
   constructor(
     private headerService: HeaderService,
     public dialogService: DialogService,
     private propertyService: PropertyService,
     private toastService: ToastService,
     private alertDialogService: AlertDialogService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private exportExcelService: ExportExcelService
   ) {
     this.getAllProperties();
     headerService.updateHeader({
@@ -42,7 +58,21 @@ export class PropertyComponent implements OnDestroy, OnInit {
     { field: "serviceBlockFullAddress", header: "Service Address", width: "30%" },
     { field: "noOfAccounts", header: "Number of Accounts", width: "30%" },
   ];
+  excelDataColumns = [
+    { field: "id", header: "Service Address ID", width: "30%" },
+    { field: "pgId", header: "Property ID", width: "30%" },
+    { field: "serviceBlockFullAddress", header: "Service Address", width: "30%" },
+  ];
   dataList: any[] = [];
+
+  accountNumberExcelDataColumns = [
+    { field: "id", header: "ID", width: "30%" },
+    { field: "propertyId", header: "Service Address ID", width: "30%" },
+    { field: "utilityId", header: "Utility ID", width: "30%" },
+    { field: "utilityName", header: "Utility Name", width: "30%" },
+    { field: "accountNumber", header: "Account Number", width: "30%" },
+  ];
+  accountNumberDataList: any[] = [];
 
   ngOnInit(): void {
     this.actionPermissions = {
@@ -170,5 +200,28 @@ export class PropertyComponent implements OnDestroy, OnInit {
         this.dataList = this.allRecords;
       }
     }, 10);
+  }
+
+  downloadExcel() {
+    this.exportExcelService.downloadExcel(this.dataList, this.excelDataColumns, "service_address");
+  }
+
+  getActiveAccountNumbers() {
+    this.propertyService.getActiveAccountNumbers().subscribe((res: any) => {
+      if (res.accountNumberDaos.length > 0) {
+        this.accountNumberDataList = res.accountNumberDaos;
+        this.downloadAccountNumberExcel();
+      } else {
+        this.toastService.showError("No active account numbers found", "Error");
+      }
+    });
+  }
+
+  downloadAccountNumberExcel() {
+    this.exportExcelService.downloadExcel(
+      this.accountNumberDataList,
+      this.accountNumberExcelDataColumns,
+      "account_numbers"
+    );
   }
 }

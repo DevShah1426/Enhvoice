@@ -1,16 +1,26 @@
 <app-header></app-header>
 <div class="w-full p-9">
-  <div class="flex flex-row bg-white rounded-t-2xl py-6 px-4 items-center w-full">
-    <div class="w-full">
+  <div class="flex flex-row bg-white justify-between rounded-t-2xl py-6 px-4 items-center w-full">
+    <div class="w-2/4">
       <app-search-input (searchTextChange)="onSearchTextChange($event)"></app-search-input>
     </div>
-    <div class="w-full text-right">
-      <app-button
-        *appHasPermission="'addProperty'"
-        (onClick)="addEditRecord()"
-        [label]="'Add New Service Address'"
-        [icon]="'pi-plus-circle'"
-      ></app-button>
+    <div class="flex flex-row w-fit gap-5">
+      <div class="w-full text-right">
+        <app-menu-button
+          [buttonHeight]="'40'"
+          [label]="'Download Reports'"
+          [icon]="'pi-download'"
+          [items]="menuItems"
+        ></app-menu-button>
+      </div>
+      <div class="w-[500px] text-right">
+        <app-button
+          *appHasPermission="'addProperty'"
+          (onClick)="addEditRecord()"
+          [label]="'Add New Service Address'"
+          [icon]="'pi-plus-circle'"
+        ></app-button>
+      </div>
     </div>
   </div>
   <ng-container *appHasPermission="'viewProperty'">

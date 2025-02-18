@@ -76,6 +76,26 @@ export class CropImageComponent implements OnInit, OnDestroy {
   dataList: any[] = [];
 
   ngOnInit(): void {
+    // in fields remove any key that contains currentRead, readType, previousRead, totalUsage
+    this.fields = this.fields.filter((field: any) => {
+      return (
+        !field.key.includes("currentRead") &&
+        !field.key.includes("readType") &&
+        !field.key.includes("previousRead") &&
+        !field.key.includes("totalUsage") &&
+        !field.key.includes("meterNumber1") &&
+        !field.key.includes("meterNumber2") &&
+        !field.key.includes("meterNumber3") &&
+        !field.key.includes("meterNumber4") &&
+        !field.key.includes("meterNumber5") &&
+        !field.key.includes("meterNumber6") &&
+        !field.key.includes("meterNumber7") &&
+        !field.key.includes("meterNumber8") &&
+        !field.key.includes("meterNumber9") &&
+        !field.key.includes("meterNumber10")
+      );
+    });
+
     this.actionPermissions = {
       delete: this.permissionService.hasPermission("template"),
     };

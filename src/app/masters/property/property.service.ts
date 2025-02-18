@@ -35,4 +35,8 @@ export class PropertyService {
   getAllAccountNumber(id: any) {
     return this.httpClient.get(environment.serverUrl + "/api/accountNumber/getAllByPropertyId?id=" + id);
   }
+
+  getActiveAccountNumbers() {
+    return this.httpClient.get(environment.serverUrl + "/api/accountNumber/getAllActiveAccountNumbers");
+  }
 }

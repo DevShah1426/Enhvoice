@@ -74,6 +74,13 @@ export class SidenavComponent {
           visible: this.permissionService.hasPermission("template"),
         },
         {
+          name: "PDF Splitter",
+          routerLink: "/enhancor/masters/pdf-splitter",
+          icon: "property",
+          expanded: false,
+          visible: this.permissionService.hasPermission("pdfSplitter"),
+        },
+        {
           name: "Template",
           routerLink: "/enhancor/masters/template",
           icon: "property",

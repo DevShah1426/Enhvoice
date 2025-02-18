@@ -8,6 +8,7 @@ import { UtilityComponent } from "./utility/utility.component";
 import { ProviderComponent } from "./provider/provider.component";
 import { PermissionGuard } from "../shared/guard/permission.guard";
 import { TemplateComponent } from "./template/template.component";
+import { PdfSplitterComponent } from "./pdf-splitter/pdf-splitter.component";
 
 const routes: Routes = [
   {
@@ -51,6 +52,12 @@ const routes: Routes = [
     component: TemplateComponent,
     canActivate: [PermissionGuard],
     data: { permission: "viewTemplate" },
+  },
+  {
+    path: "pdf-splitter",
+    component: PdfSplitterComponent,
+    canActivate: [PermissionGuard],
+    data: { permission: "pdfSplitter" },
   },
 ];
 

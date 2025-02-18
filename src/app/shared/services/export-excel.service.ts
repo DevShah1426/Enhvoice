@@ -9,12 +9,12 @@ import { DatePipe } from "@angular/common";
 export class ExportExcelService {
   constructor(private datePipe: DatePipe) {}
 
-  downloadExcel(dataList: any, dataColumns: any) {
+  downloadExcel(dataList: any, dataColumns: any, excelName: string = "report") {
     const ws: XLSX.WorkSheet = this.convertToExcel(dataList, dataColumns);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const filename = "report_" + this.datePipe.transform(new Date(), "yyyy_MM_dd_hh_mm_ss") + ".xlsx";
+    const filename = excelName + "_" + this.datePipe.transform(new Date(), "yyyy_MM_dd_hh_mm_ss") + ".xlsx";
     saveAs(new Blob([wbout], { type: "application/octet-stream" }), filename);
   }
 

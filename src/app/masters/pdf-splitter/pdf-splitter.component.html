@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="w-full p-9" *appHasPermission="'template'">
+  <app-title-card
+    [title]="'PDF Splitter'"
+    [description]="'Split a PDF into multiple PDFs based on page numbers'"
+    [buttonLabel]="'Upload PDF'"
+    [showButton]="true"
+    [buttonIcon]="'pi-upload'"
+    (emitButtonClick)="file.click()"
+  ></app-title-card>
+  <div class="grid grid-cols-2 bg-white rounded-2xl gap-10 py-6 px-4 mt-9 items-center w-full h-full">
+    <div class="w-full h-full text-center shadow-xl">
+      <div class="flex flex-row w-full pb-2">
+        <div class="w-full text-left">
+          <svg-icon key="previous" [size]="'md'" class="cursor-pointer" (click)="previousImage()" />
+        </div>
+        <div class="w-full text-sm font-medium">
+          Page {{ images.length == 0 ? 0 : currentImageIndex + 1 }} of {{ images.length }}
+        </div>
+        <div class="w-full text-right">
+          <svg-icon key="next" [size]="'md'" class="cursor-pointer" (click)="nextImage()" />
+        </div>
+      </div>
+
+      <canvas #imageCanvas></canvas>
+    </div>
+    <div class="min-h-full h-full">
+      <form [formGroup]="templateForm">
+        <div class="w-full grid grid-cols-2 text-left gap-10 mt-5">
+          <div>
+            <app-input
+              [inputClass]="'form-input'"
+              [labelClass]="'form-label'"
+              [inputLabel]="'Start Page No'"
+              [inputType]="'number'"
+              [readOnly]="images.length == 0"
+              [control]="templateForm.get('startPageNo')"
+            ></app-input>
+          </div>
+          <div>
+            <app-input
+              [inputClass]="'form-input'"
+              [labelClass]="'form-label'"
+              [inputLabel]="'End Page No'"
+              [inputType]="'number'"
+              [readOnly]="images.length == 0"
+              [control]="templateForm.get('endPageNo')"
+            ></app-input>
+          </div>
+        </div>
+        <div class="text-center w-full mt-5">
+          <app-button
+            (onClick)="downloadPDF()"
+            [label]="'Generate PDF'"
+            [icon]="'pi-save'"
+            [disabled]="images.length == 0 || !templateForm.valid"
+          ></app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<input #file class="hidden" type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf" />

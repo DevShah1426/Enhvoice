@@ -74,11 +74,15 @@ export class PropertywiseFilterComponent implements OnInit {
   resetFilter() {
     this.filterForm.get("year").setValue(this.years[0].value);
     this.filterForm.get("month").setValue("");
+    this.selectedYear = years[0];
     localStorage.removeItem("filter");
+    localStorage.removeItem("searchText");
+    localStorage.removeItem("propertyNameSearchText");
     this.selectedMonth = null;
     this.onFilter.emit({
       year: this.filterForm.value.year,
       month: this.filterForm.value.month,
+      clear: true,
     });
   }
 }

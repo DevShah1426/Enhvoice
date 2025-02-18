@@ -206,7 +206,7 @@ export class DynamicResultFormComponent implements OnInit {
           if (data.status == "uploaded" || data.status == "property_not_found") {
             this.templateName = data.templateName;
             this.utilityName = data.utilityName;
-            this.propertyName = data.propertyName;
+            this.propertyName = data.serviceBlockFullAddress;
             this.propertyGroupName = data.propertyGroupName;
             if (this.propertyName == "" || this.propertyName == null) {
               let alertDialogDetails: AlertDetails = {

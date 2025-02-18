@@ -121,6 +121,15 @@ export class AddEditUsergroupComponent implements OnInit {
       form: "template",
     },
 
+    // PDF Splitter
+    {
+      title: "Split PDF",
+      description: "Allows user full access to review and activate assets",
+      icon: "field",
+      permission: true,
+      form: "pdfSplitter",
+    },
+
     // View Template
     {
       title: "View Template",
@@ -203,6 +212,7 @@ export class AddEditUsergroupComponent implements OnInit {
       archiveUnarchiveProperty: new FormControl(false),
       viewUserGroup: new FormControl(false),
       addUserGroup: new FormControl(false),
+      pdfSplitter: new FormControl(false),
       viewTemplate: new FormControl(false),
       addAssociation: new FormControl(false),
       viewProvider: new FormControl(false),
@@ -235,6 +245,7 @@ export class AddEditUsergroupComponent implements OnInit {
         archiveUnarchiveProperty: permissions.archiveUnarchiveProperty,
         viewUserGroup: permissions.viewUserGroup,
         addUserGroup: permissions.addUserGroup,
+        pdfSplitter: permissions.pdfSplitter,
         viewTemplate: permissions.viewTemplate,
         addAssociation: permissions.addAssociation,
         viewProvider: permissions.viewProvider,
@@ -290,6 +301,7 @@ export class AddEditUsergroupComponent implements OnInit {
       archiveUnarchiveProperty: formValue.archiveUnarchiveProperty,
       viewUserGroup: formValue.viewUserGroup,
       addUserGroup: formValue.addUserGroup,
+      pdfSplitter: formValue.pdfSplitter,
       viewTemplate: formValue.viewTemplate,
       addAssociation: formValue.addAssociation,
       viewProvider: formValue.viewProvider,
@@ -331,6 +343,7 @@ export class AddEditUsergroupComponent implements OnInit {
       archiveUnarchiveProperty: formValue.archiveUnarchiveProperty,
       viewUserGroup: formValue.viewUserGroup,
       addUserGroup: formValue.addUserGroup,
+      pdfSplitter: formValue.pdfSplitter,
       viewTemplate: formValue.viewTemplate,
       addAssociation: formValue.addAssociation,
       viewProvider: formValue.viewProvider,

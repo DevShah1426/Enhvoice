@@ -76,7 +76,7 @@ export class TransactionsService {
   }
 
   getReportDetails(body: any) {
-    return this.httpClient.get(environment.serverUrl + "/api/trndocuments/getAll?" + body);
+    return this.httpClient.get(environment.serverUrl + "/api/trndocuments/getAllV1?" + body);
   }
 
   getPropertyByAccountNo(body: any, templateId: any, transactionId: any) {

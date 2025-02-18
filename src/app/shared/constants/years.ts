@@ -7,7 +7,7 @@ export const generateYears = (): { label: string; value: string }[] => {
     years.push({ label: year.toString(), value: year.toString() });
   }
 
-  return years;
+  return years.reverse();
 };
 
 export const years = generateYears();

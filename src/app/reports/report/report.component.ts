@@ -68,7 +68,8 @@ export class ReportComponent implements OnInit {
   }
 
   dataColumns = [
-    { field: "propertyName", header: "Service Address Name", width: "15%" },
+    { field: "propertyGroupName", header: "Property Name", width: "15%" },
+    { field: "serviceBlockFullAddress", header: "Service Address Name", width: "15%" },
     { field: "accountNumber", header: "Account Number", width: "15%" },
     { field: "billingFromDate", header: "Billing From", width: "10%" },
     { field: "billingToDate", header: "Billing To", width: "10%" },
@@ -102,13 +103,13 @@ export class ReportComponent implements OnInit {
         for (let i = 0; i < res.trnDocumentDao.length; i++) {
           res.trnDocumentDao[i].billingFromDate = this.datePipe.transform(
             res.trnDocumentDao[i].billingFromDate,
-            "yyyy-MM-dd"
+            "MM-dd-yy"
           );
           res.trnDocumentDao[i].billingToDate = this.datePipe.transform(
             res.trnDocumentDao[i].billingToDate,
-            "yyyy-MM-dd"
+            "MM-dd-yy"
           );
-          res.trnDocumentDao[i].billDate = this.datePipe.transform(res.trnDocumentDao[i].billDate, "yyyy-MM-dd");
+          res.trnDocumentDao[i].billDate = this.datePipe.transform(res.trnDocumentDao[i].billDate, "MM-dd-yy");
         }
         this.dataList = res.trnDocumentDao;
         this.allRecords = res.trnDocumentDao;
@@ -130,11 +131,12 @@ export class ReportComponent implements OnInit {
       { field: "accountNumber", header: "Account Number" },
       { field: "propertyYardyId", header: "Community Code" },
       { field: "glCode", header: "GL Code" },
-      { field: "propertyName", header: "Property Name" },
+      { field: "propertyGroupName", header: "Property Name" },
       { field: "utilityName", header: "Utility Name" },
       { field: "providerName", header: "Provider" },
-      { field: "serviceAddressOcr", header: "Service Address" },
-      { field: "serviceEndDate", header: "Service End Date" },
+      { field: "serviceBlockFullAddress", header: "Service Address" },
+      { field: "billingFromDate", header: "Service Start Date" },
+      { field: "billingToDate", header: "Service End Date" },
       { field: "billDate", header: "Bill Date" },
       { field: "cost", header: "Cost" },
       { field: "usage", header: "Usage" },
@@ -157,7 +159,7 @@ export class ReportComponent implements OnInit {
       { field: "balanceForword", header: "Balance Forward" },
       { field: "paymentAgreementInstallment", header: "Payment Agreement Installment" },
       { field: "adjustments", header: "Adjustments" },
-      { field: "totalAmountDue", header: "Total Amount Due" },
+      { field: "amountDue", header: "Total Amount Due" },
       { field: "dueDate", header: "Due Date" },
 
       { field: "meterNumber1", header: "Meter Number 1" },
@@ -219,6 +221,8 @@ export class ReportComponent implements OnInit {
       { field: "readType10", header: "Read Type 10" },
       { field: "previousRead10", header: "Previous Read 10" },
       { field: "totalUsage10", header: "Total Usage 10" },
+
+      { field: "duplicateFlag", header: "Duplicate" },
     ];
     this.exportExcelService.downloadExcel(this.dataList, dataColumns);
   }

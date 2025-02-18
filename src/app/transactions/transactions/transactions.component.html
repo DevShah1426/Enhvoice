@@ -11,7 +11,7 @@
         ></app-uploaded-folders>
       </div>
       <div class="w-full px-10">
-        <div class="flex flex-row items-center w-full">
+        <div class="flex flex-row items-center w-full justify-between">
           <div class="min-w-fit w-fit">
             <app-select-button
               [value]="activeSelection"
@@ -38,13 +38,24 @@
               <div class="w-full">
                 <app-propertywise-filter (onFilter)="onFilter($event, 'property')"></app-propertywise-filter>
               </div>
-              <div class="w-96 text-center mt-5">
-                <app-search-input
-                  [placeholder]="'Account Number'"
-                  *ngIf="filterBody.year && filterBody.month"
-                  [searchText]="searchText"
-                  (searchTextChange)="onSearchTextChange($event)"
-                ></app-search-input>
+              <div class="w-full flex flex-row text-center mt-5">
+                <div class="w-full">
+                  <app-search-input
+                    [placeholder]="'Account Number'"
+                    *ngIf="filterBody.year && filterBody.month"
+                    [searchText]="searchText"
+                    (searchTextChange)="onSearchTextChange($event, propertyNameSearchText)"
+                  ></app-search-input>
+                </div>
+
+                <div class="w-full">
+                  <app-search-input
+                    [placeholder]="'Property Name'"
+                    *ngIf="filterBody.year"
+                    [searchText]="propertyNameSearchText"
+                    (searchTextChange)="onSearchTextChange(searchText, $event)"
+                  ></app-search-input>
+                </div>
               </div>
             </div>
           </div>

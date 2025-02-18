@@ -8,6 +8,7 @@ import { AlertDialogService } from "../../shared/services/alert-dialog.service";
 import { Subscription } from "rxjs";
 import { ToastService } from "../../shared/services/toast.service";
 import { PermissionService } from "../../shared/services/permission.service";
+import { ExportExcelService } from "../../shared/services/export-excel.service";
 
 @Component({
   selector: "app-group",
@@ -38,7 +39,8 @@ export class GroupComponent implements OnDestroy, OnInit {
     private groupService: GroupService,
     private alertDialogService: AlertDialogService,
     private toastService: ToastService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private exportExcelService: ExportExcelService
   ) {
     this.getAllNotArchivedPropertyGroups();
     headerService.updateHeader({
@@ -61,7 +63,15 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   dataColumns = [
     { field: "propertyGroupName", header: "Property Name", width: "30%" },
-    { field: "propertyYardyId", header: "Yardi ID", width: "20%" },
+    { field: "propertyYardyId", header: "Yardi/RealPage ID", width: "20%" },
+    { field: "state", header: "State", width: "25%" },
+    { field: "city", header: "City", width: "25%" },
+  ];
+  excelDataColumns = [
+    { field: "id", header: "Property ID", width: "30%" },
+    { field: "country", header: "Country", width: "30%" },
+    { field: "propertyGroupName", header: "Property Name", width: "30%" },
+    { field: "propertyYardyId", header: "Yardi/RealPage ID", width: "20%" },
     { field: "state", header: "State", width: "25%" },
     { field: "city", header: "City", width: "25%" },
   ];
@@ -224,5 +234,9 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.dataList = this.allRecords;
       }
     }, 10);
+  }
+
+  downloadExcel() {
+    this.exportExcelService.downloadExcel(this.dataList, this.excelDataColumns, "property");
   }
 }
